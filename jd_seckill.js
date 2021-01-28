@@ -20,19 +20,20 @@ const jd_buy = async (config) => {
                 "--disable-gl-drawing-for-tests",
             ],
             ignoreDefaultArgs: ["--enable-automation"],
+            defaultViewport: null
         });
         const page = await browser.newPage();
         page.setDefaultNavigationTimeout(5 * 1000);
-        await page.setRequestInterception(true);
-        page.on("request", async (req) => {
-            // 根据请求类型过滤
-            const resourceType = req.resourceType();
-            if (resourceType === "image") {
-                req.abort();
-            } else {
-                req.continue();
-            }
-        });
+        // await page.setRequestInterception(true);
+        // page.on("request", async (req) => {
+        //     // 根据请求类型过滤
+        //     const resourceType = req.resourceType();
+        //     if (resourceType === "image") {
+        //         req.abort();
+        //     } else {
+        //         req.continue();
+        //     }
+        // });
 
         await Promise.all(
             addCookies(config.cookie, ".jd.com").map((pair) => {
